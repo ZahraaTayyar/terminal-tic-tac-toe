@@ -1,13 +1,13 @@
 import { checkIfNoMovesLeft } from './board-printer.js';
 
-
-// Example board:
-let board = [
-    ['X', '_', '_'],
-    ['_', 'X', '_'],
-    ['O', 'O', 'X']
-];
-
+/*
+    Example board:
+        let board = [
+            ['X', '_', '_'],
+            ['_', 'X', '_'],
+            ['O', 'O', 'X']
+        ];
+*/
 
 /*
     Given 3 parameters:
@@ -18,18 +18,10 @@ let board = [
     Otherwise, return false
 */
 
-
-
 function checkRow(board, player, rowNumber) {
-
-    let xPlayer = [];
-    let oPlayer = [];
-    if (player === "X")
-        xPlayer = board[rowNumber].filter(x => x === 'X');
-    else
-        oPlayer = board[rowNumber].filter(x => x === 'O');
-
-    if (xPlayer.length === 3 || oPlayer.length === 3)
+    let playCount = [];
+    playCount = board[rowNumber].filter(x => x === player);
+    if (playCount.length === 3)
         return true;
     return false;
 }
@@ -42,22 +34,16 @@ function checkRow(board, player, rowNumber) {
     Return true if the player has made a move in all 3 squares in the column
     Otherwise, return false
 */
+
 function checkColumn(board, player, columnNumber) {
-
-    let xPlayer = [];
-    let oPlayer = [];
-
+    let playCount = [];
     for (let i = 0; i < 3; i++)
-        if (player === "X" && board[i][columnNumber] === "X")
-            xPlayer.push("X");
-        else if (player === "O" && board[i][columnNumber] === "O")
-            oPlayer.push("O");
-
-    if (xPlayer.length === 3 || oPlayer.length === 3)
+        if (board[i][columnNumber] === player)
+            playCount.push(player);
+    if (playCount.length === 3)
         return true;
     return false;
 }
-
 
 /*
     Given 2 parameters:
@@ -66,43 +52,29 @@ function checkColumn(board, player, columnNumber) {
     Return true if the player has made a move in 3 diagonal squares
     Otherwise, return false
 */
+
 function checkDiagonal(board, player) {
+    let playCount = [];
 
-    let xPlayer = [];
-    let oPlayer = [];
-    for (let i = 0; i < 3; i++) {
-        if (player === "X" && board[i][i] === "X")
-            xPlayer.push("X");
-        else if (player === "O" && board[i][i] === "O")
-            oPlayer.push("O");
-    }
-
-    if (xPlayer.length === 3 || oPlayer.length === 3)
+    for (let i = 0; i < 3; i++)
+        if (board[i][i] === player)
+            playCount.push(player);
+    if (playCount.length === 3)
         return true;
 
-    else {
-        let xPlayer = [];
-        let oPlayer = [];
+    playCount = [];
 
-        let k = 0;
-        for (let j = 2; j >= 0; j--) {
-
-            if (player === "X" && board[k][j] === "X")
-                xPlayer.push("X");
-            else if (player === "O" && board[k][j] === "O")
-                oPlayer.push("O");
-
-            k++;
-        }
-
-        if (xPlayer.length === 3 || oPlayer.length === 3)
-            return true;
-        else
-            return false;
+    let k = 0;
+    for (let j = 2; j >= 0; j--) {
+        if (board[k][j] === player)
+            playCount.push(player)
+        k++;
     }
-
+    if (playCount.length === 3)
+        return true;
+    else
+        return false;
 }
-
 
 
 // It may be easier to use an if statement than a loop here
